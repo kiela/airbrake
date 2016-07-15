@@ -119,8 +119,8 @@ module Airbrake
                                    action_dispatch_params ||
                                    rack_env(:params) ||
                                    {}
-      @component           = args[:component] || args[:controller] || parameters['controller']
-      @action              = args[:action] || parameters['action']
+      @component           = args[:component] || args[:controller] || (parameters['controller'] if parameters.is_a?(Hash)) || nil
+      @action              = args[:action] || (parameters['action'] if parameters.is_a?(Hash)) || nil
 
       @environment_name = args[:environment_name]
       @cgi_data         = (args[:cgi_data].respond_to?(:to_hash) && args[:cgi_data].to_hash.dup) || args[:rack_env] || {}
